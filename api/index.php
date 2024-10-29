@@ -16,6 +16,12 @@ require_once __DIR__ . '/db/AccesoDatos.php';
 // require_once './middlewares/Logger.php';
 
 require_once __DIR__ . '/controllers/UsuarioController.php';
+require_once __DIR__ . '/controllers/EmpleadoController.php';
+require_once __DIR__ . '/controllers/SocioController.php';
+require_once __DIR__ . '/controllers/ProductoController.php';
+require_once __DIR__ . '/controllers/PedidoController.php';
+require_once __DIR__ . '/controllers/MesaController.php';
+require_once __DIR__ . '/controllers/ClienteController.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -31,17 +37,17 @@ $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
 // Routes
-$app->group('/usuarios', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \UsuarioController::class . ':TraerTodos');
-    $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
-    $group->post('[/]', \UsuarioController::class . ':CargarUno');
-  });
+$app->get('/VerUsuarios', \UsuarioController::class . ':TraerTodos');
+$app->post('/CargarEmpleado', \EmpleadoController::class . ':CargarUno');
+$app->post('/CargarSocio', \SocioController::class . ':CargarUno');
+$app->post('/CargarCliente', \ClienteController::class . ':CargarUno');
+$app->post('/AgregarProducto', \ProductoController::class . ':CargarUno');
+$app->get('/VerProductos', \ProductoController::class . ':TraerTodos');
+$app->post('/AgregarPedido', \PedidoController::class . ':CargarUno');
+$app->get('/VerPedidos', \PedidoController::class . ':TraerTodos');
+$app->post('/AgregarMesa', \MesaController::class . ':CargarUno');
+$app->get('/VerMesas', \MesaController::class . ':TraerTodos');
 
-$app->get('[/]', function (Request $request, Response $response) {    
-    $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP"));
-    
-    $response->getBody()->write($payload);
-    return $response->withHeader('Content-Type', 'application/json');
-});
+
 
 $app->run();
