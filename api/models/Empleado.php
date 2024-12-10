@@ -1,58 +1,84 @@
 <?php
 
 require_once "Usuario.php";
-require_once __DIR__ . '/../interfaces/IApiUsable.php';
 
 class Empleado extends Usuario{
-    public $tipo;
-    public $estado;
-    public $fechaAlta;
-    public $FechaBaja;
 
-    public function crearEmpleado()
+    public function tomarPedido($pedidoDetalles)
     {
+        // Verificar si el usuario es del tipo "mozo"
+        if ($this->tipo !== "mozo") {
+            throw new Exception("El usuario no tiene permisos para tomar pedidos.");
+        }
+
+        // Preparar los detalles del pedido
+        $mesaId = $pedidoDetalles['mesa_id'];
+        $clienteId = $pedidoDetalles['cliente_id'];
+        $productos = $pedidoDetalles['productos']; // Array de productos
+
+        // Instancia de conexión a la base de datos
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        
-        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
 
-        $consultaUsuario = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave) VALUES (:usuario, :clave)");
-        $consultaUsuario->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consultaUsuario->bindValue(':clave', $claveHash, PDO::PARAM_STR);
-        $consultaUsuario->execute();
+        // Crear un nuevo pedido en la tabla 'pedidos'
+        $consultaPedido = $objAccesoDatos->prepararConsulta(
+            "INSERT INTO pedidos (mesa_id, cliente_id, mozo_id, fecha) VALUES (:mesa_id, :cliente_id, :mozo_id, :fecha)"
+        );
+        $consultaPedido->bindValue(':mesa_id', $mesaId, PDO::PARAM_INT);
+        $consultaPedido->bindValue(':cliente_id', $clienteId, PDO::PARAM_INT);
+        $consultaPedido->bindValue(':mozo_id', $this->id, PDO::PARAM_INT);
+        $consultaPedido->bindValue(':fecha', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+        $consultaPedido->execute();
 
-        
-        $idUsuario = $objAccesoDatos->obtenerUltimoId();
-        $consultaEmpleado = $objAccesoDatos->prepararConsulta("INSERT INTO empleados (id, usuario, clave, tipo, estado, fecha_alta) VALUES (:id, :usuario, :clave, :tipo, :estado, :fechaAlta)");
-        $consultaEmpleado->bindValue(':id', $idUsuario, PDO::PARAM_INT);
-        $consultaEmpleado->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consultaEmpleado->bindValue(':clave', $claveHash, PDO::PARAM_STR);
-        $consultaEmpleado->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consultaEmpleado->bindValue(':estado', $this->estado, PDO::PARAM_STR);
-        $consultaEmpleado->bindValue(':fechaAlta', $this->fechaAlta->format('Y-m-d'), PDO::PARAM_STR); // Fecha en formato Y-m-d
+        // Obtener el ID del pedido recién creado
+        $pedidoId = $objAccesoDatos->obtenerUltimoId();
 
-        $consultaEmpleado->execute();
+        // Insertar cada producto del pedido en la tabla intermedia 'productos_pedidos'
+        foreach ($productos as $producto) {
+            $productoId = $producto['id'];
 
-        return $idUsuario;
+            $consultaProductoPedido = $objAccesoDatos->prepararConsulta(
+                "INSERT INTO productos_pedidos (pedido_id, producto_id) VALUES (:pedido_id, :producto_id)"
+            );
+            $consultaProductoPedido->bindValue(':pedido_id', $pedidoId, PDO::PARAM_INT);
+            $consultaProductoPedido->bindValue(':producto_id', $productoId, PDO::PARAM_INT);
+            $consultaProductoPedido->execute();
+        }
+
+        // Retornar un mensaje de confirmación
+        return "Pedido tomado y guardado correctamente.";
     }
 
-    public static function obtenerEmpleados()
+    public static function obtenerPorId($id)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM empleados");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->execute();
-
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+        // Obtener el resultado como una instancia de Empleado
+        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Empleado');
+        $empleado = $consulta->fetch();
+    
+        // Si no hay coincidencia, retornar null
+        if (!$empleado) {
+            return null;
+        }
+    
+        return $empleado;
     }
 
 
-    public static function obtenerEmpleadoEspecifico($usuario)
+    public static function guardarFotoEnPedido($idPedido, $nombreFoto)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM usuarios WHERE usuario = :usuario");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE pedidos SET fotomesa = :fotomesa WHERE id_pedido = :id_pedido");
+
+        // Vinculamos los parámetros
+        $consulta->bindValue(':fotomesa', $nombreFoto, PDO::PARAM_STR);
+        $consulta->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
+
+        // Ejecutamos la consulta
         $consulta->execute();
-
-        return $consulta->fetchObject('Usuario');
+        $exito = true;
+        return $exito;
     }
-
 }

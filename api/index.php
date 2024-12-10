@@ -22,11 +22,12 @@ require_once __DIR__ . '/controllers/ProductoController.php';
 require_once __DIR__ . '/controllers/PedidoController.php';
 require_once __DIR__ . '/controllers/MesaController.php';
 require_once __DIR__ . '/controllers/ClienteController.php';
+require_once __DIR__ . '/middlewares/UsuarioMiddleware.php';
+require_once __DIR__ . '/middlewares/ConfirmarTipo.php';
 
 // Load ENV
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../"); 
 $dotenv->safeLoad();
-
 // Instantiate App
 $app = AppFactory::create();
 
@@ -38,15 +39,35 @@ $app->addBodyParsingMiddleware();
 
 // Routes
 $app->get('/VerUsuarios', \UsuarioController::class . ':TraerTodos');
-$app->post('/CargarEmpleado', \EmpleadoController::class . ':CargarUno');
-$app->post('/CargarSocio', \SocioController::class . ':CargarUno');
-$app->post('/CargarCliente', \ClienteController::class . ':CargarUno');
+$app->post('/Login',\UsuarioController::class . ':Login');
+$app->post('/CargarUsuario', \UsuarioController::class . ':CargarUno')->add(new UsuarioMiddleware());
+$app->get('/VerEmpleado/{id}', \EmpleadoController::class . ':TraerEmpleadoPorID');
+$app->post('/TomarFotoMesa', \EmpleadoController::class . ':cargarFoto')->add(new ConfirmarTipo(['mozo']));
+$app->post('/TomarPedido', \EmpleadoController::class . ':cargarPedido')->add(new ConfirmarTipo(['mozo']));
+$app->get('/listarProductosPendientesCocina/{sector}', \EmpleadoController::class . ':listarProductosPendientesCocina')->add(new ConfirmarTipo(['cocinero']));
+$app->get('/listarProductosPendientesCervezeria', \EmpleadoController::class . ':listarProductosPendientesCervezeria')->add(new ConfirmarTipo(['cervecero']));
+$app->get('/listarProductosPendientesBar', \EmpleadoController::class . ':listarProductosPendientesBar')->add(new ConfirmarTipo(['bartender']));
+///en preparacion
+$app->put('/CambiarEstadoProductoCocina', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cocinero']));
+$app->put('/CambiarEstadoProductoCervezeria', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cervecero']));
+$app->put('/CambiarEstadoProductoBar', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['bartender']));
+$app->get('/VerTiempoEspera', \UsuarioController::class . ':verTiempoDeEspera')->add(new ConfirmarTipo(['cliente']));
+$app->get('/VerPedidos', \PedidoController::class . ':TraerTodos')->add(new ConfirmarTipo(['socio']));
+$app->get('/VerPedido', \PedidoController::class . ':TraerUno')->add(new ConfirmarTipo(['socio']));
+//listo para servir
+$app->put('/ProductoDeCocinaListo', \EmpleadoController::class . ':cambiarAListo')->add(new ConfirmarTipo(['cocinero']));
+$app->put('/ProductoDeCerveceriaListo', \EmpleadoController::class . ':cambiarAListo')->add(new ConfirmarTipo(['cervecero']));
+$app->put('/ProductoDeBarListo', \EmpleadoController::class . ':cambiarAListo')->add(new ConfirmarTipo(['bartender']));
+//cambiarestadomesa
+$app->put('/PedidoListo', \EmpleadoController::class . ':PedidoListo')->add(new ConfirmarTipo(['mozo']));
+
 $app->post('/AgregarProducto', \ProductoController::class . ':CargarUno');
 $app->get('/VerProductos', \ProductoController::class . ':TraerTodos');
 $app->post('/AgregarPedido', \PedidoController::class . ':CargarUno');
-$app->get('/VerPedidos', \PedidoController::class . ':TraerTodos');
+
 $app->post('/AgregarMesa', \MesaController::class . ':CargarUno');
 $app->get('/VerMesas', \MesaController::class . ':TraerTodos');
+
 
 
 
