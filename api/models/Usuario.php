@@ -14,8 +14,8 @@ class Usuario
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, fechaAlta, fechaBaja, estado) 
-                                                    VALUES (:usuario, :clave, :tipo, :fechaAlta, :fechaBaja , :estado)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, fecha_alta, fecha_baja, estado) 
+                                                    VALUES (:usuario, :clave, :tipo, :fecha_alta, :fecha_baja , :estado)");
 
 
         $fechaAlta = new DateTime();
@@ -27,8 +27,8 @@ class Usuario
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':fechaAlta', $fechaAltaFormatted, PDO::PARAM_STR);
-        $consulta->bindValue(':fechaBaja', $fechaBajaFormatted, PDO::PARAM_STR); // O NULL si es necesario
+        $consulta->bindValue(':fecha_alta', $fechaAltaFormatted, PDO::PARAM_STR);
+        $consulta->bindValue(':fecha_baja', $fechaBajaFormatted, PDO::PARAM_STR);
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
 
         $consulta->execute();
@@ -40,7 +40,7 @@ class Usuario
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         // Seleccionamos todos los campos de la tabla 'usuarios'
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, tipo, fechaAlta, fechaBaja, estado FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, tipo, fecha_alta, fecha_baja, estado FROM usuarios");
         $consulta->execute();
 
         // Devolvemos todos los resultados como una lista de objetos 'usuario'
