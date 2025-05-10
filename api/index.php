@@ -44,11 +44,11 @@ $app->post('/CargarUsuario', \UsuarioController::class . ':CargarUno')->add(new 
 $app->get('/VerEmpleado/{id}', \EmpleadoController::class . ':TraerEmpleadoPorID');
 $app->post('/TomarFotoMesa', \EmpleadoController::class . ':cargarFoto')->add(new ConfirmarTipo(['mozo']));
 $app->post('/TomarPedido', \EmpleadoController::class . ':cargarPedido')->add(new ConfirmarTipo(['mozo']));
-$app->get('/listarProductosPendientesCocina/{sector}', \EmpleadoController::class . ':listarProductosPendientesCocina')->add(new ConfirmarTipo(['cocinero']));
+$app->get('/listarProductosPendientesCocina/{sector}', \EmpleadoController::class . ':listarProductosPendientesCocina')->add(new ConfirmarTipo(['Cocinero']));
 $app->get('/listarProductosPendientesCervezeria', \EmpleadoController::class . ':listarProductosPendientesCervezeria')->add(new ConfirmarTipo(['cervecero']));
 $app->get('/listarProductosPendientesBar', \EmpleadoController::class . ':listarProductosPendientesBar')->add(new ConfirmarTipo(['bartender']));
 ///en preparacion
-$app->put('/CambiarEstadoProductoCocina', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cocinero']));
+$app->put('/CambiarEstadoProductoCocina', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['Cocinero']));
 $app->put('/CambiarEstadoProductoCervezeria', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cervecero']));
 $app->put('/CambiarEstadoProductoBar', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['bartender']));
 $app->get('/VerTiempoEspera', \UsuarioController::class . ':verTiempoDeEspera')->add(new ConfirmarTipo(['cliente']));

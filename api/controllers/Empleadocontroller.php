@@ -113,7 +113,7 @@ class EmpleadoController extends Empleado
     {
         $parametros = $request->getParsedBody();
         $idPedido = $parametros['idPedido'];
-        $nombreProducto = $parametros['nombreProducto'];
+        $nombreProducto = $parametros['nombre_producto'];
         $tiempo_preparacion = $parametros['tiempo_preparacion'];
 
         try {

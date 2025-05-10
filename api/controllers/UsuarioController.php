@@ -86,7 +86,7 @@ class UsuarioController extends Usuario implements IApiUsable
         $usuarioAutenticado = Usuario::Logearse($usuario, $clave);
 
         if ($usuarioAutenticado) {
-            $token = AutentificadorJWT::CrearToken(['usuario' => $usuarioAutenticado->usuario, 'tipo' => $usuarioAutenticado->tipo]);
+            $token = AutentificadorJWT::CrearToken(['usuario' => $usuarioAutenticado->usuario, 'tipo' => $usuarioAutenticado->tipo, 'id'=> $usuarioAutenticado->id]);
 
             // Responder con el token
             $payload = json_encode(['token' => $token]);

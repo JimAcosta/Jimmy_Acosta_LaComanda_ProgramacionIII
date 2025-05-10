@@ -108,6 +108,7 @@ class Usuario
             $usuarioObj = new Usuario();
             $usuarioObj->usuario = $usuarioDb['usuario'];
             $usuarioObj->tipo = $usuarioDb['tipo']; 
+            $usuarioObj->id = $usuarioDb['id']; 
             return $usuarioObj;
         }
         return null;
