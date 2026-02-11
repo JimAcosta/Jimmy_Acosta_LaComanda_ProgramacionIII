@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/Pedido.php';
 require_once __DIR__ . '/../models/Usuario.php';
 require_once __DIR__ . '/../interfaces/IApiUsable.php';
+require_once __DIR__ . '/../utils/RespuestaJson.php';
 
 class PedidoController implements IApiUsable
 {

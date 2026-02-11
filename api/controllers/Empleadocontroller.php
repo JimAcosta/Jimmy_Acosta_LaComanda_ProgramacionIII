@@ -6,6 +6,8 @@ require_once __DIR__ . '/../models/Producto.php';
 require_once __DIR__ . '/../models/Mesa.php';
 require_once __DIR__ . '/../utils/AutentificadorJWT.php';
 require_once __DIR__ . '/../middlewares/ConfirmarTipo.php';
+require_once __DIR__ . '/../utils/RespuestaJson.php';
+require_once __DIR__ . '/../Validadores/ValidadorProductos.php';
 
 
 class EmpleadoController extends Empleado
@@ -38,17 +40,39 @@ class EmpleadoController extends Empleado
         $pedido = new Pedido();
         $pedido->cliente_asignado = $data['cliente_asignado'];
         $pedido->estado = $data['estado'];
-        //$pedido->preciototal = $data['precioTotal'];
         $pedido->mesa_asignada = $data['mesaAsignada'];
         $pedido->mozo_asignado = $data['mozoAsignado'];
 
         $productos = $data['productos'];
+
+        if(!Empleado::ValidarMozoExistente($data['mozoAsignado']))
+        {
+            return RespuestaJson::Error($response,"No existe el Mozo,Verifique los campos",400);
+        }
+        if(!Mesa::ValidarMesaExistente($data['mesaAsignada']))
+        {
+            return RespuestaJson::Error($response,"No existe la Mesa,Verifique los campos",400);
+        }
+
+        foreach ($productos as $producto) 
+        {
+            if (!Producto::ExisteProductoPorNombre($producto['nombre'])) 
+            {
+                return RespuestaJson::Error($response,"No existe el producto: {$producto['nombre']}",400);
+            }
+        }
+
+        $productos = $data['productos'];
         $idPedido = $pedido->crearPedido($productos);
 
-        
-        $responseData = ['idPedido' => $idPedido];
-        $response->getBody()->write(json_encode($responseData));
-        return $response->withHeader('Content-Type', 'application/json');
+        if($idPedido != null || isset($idPedido))
+        {
+            return RespuestaJson::Exito($response,"idPedido = $idPedido",200);
+        }
+        else
+        {
+        return RespuestaJson::Error($response,"No se pudo crear el pedido",400);
+        }
     }
 
 
@@ -58,8 +82,7 @@ class EmpleadoController extends Empleado
         $parametros = $request->getParsedBody();
         
         if (!isset($files['foto'])) {
-            $response->getBody()->write(json_encode(['error' => 'foto no enviada']));
-            return $response->withStatus(401);
+            return RespuestaJson::Error($response,"Foto no enviada",400);
         }
         else{
             $foto = $files['foto'];
@@ -68,121 +91,152 @@ class EmpleadoController extends Empleado
             
             if (!is_dir($directorio)) {
                 mkdir($directorio, 0777, true);
-            }
-            
-            $nombreArchivo = uniqid('foto_', true) .$idPedido. '.' . pathinfo($foto->getClientFilename(), PATHINFO_EXTENSION);
-            $foto->moveTo($directorio . $nombreArchivo);
-
-            if ($idPedido) {
-                if (Empleado::guardarFotoEnPedido($idPedido, $nombreArchivo)){
-                    $response->getBody()->write("Foto guardada correctamente");
+                if (!$idPedido) {
+                    if (Empleado::guardarFotoEnPedido($idPedido, $nombreArchivo)){
+                        $nombreArchivo = uniqid('foto_', true) .$idPedido. '.' . pathinfo($foto->getClientFilename(), PATHINFO_EXTENSION);
+                        $foto->moveTo($directorio . $nombreArchivo);
+                        return RespuestaJson::Exito($response,"Foto guardada correctamente",200);
+                    }
+                    else
+                    {
+                        return RespuestaJson::Error($response,"Foto no guardada",400);
+                    }
                 }
-                else{
-                    $response->getBody()->write(json_encode(['error' => 'foto no guardada']));
-                }
             }
-            return $response->withStatus(200);
         }
+        return RespuestaJson::Error($response,"Foto no guardada",400);
     }
+
     public function listarProductosPendientesCocina($request, $response, $args)
     {
         $listaProductos = Producto::listarProductosPedidos('cocina');
-        $response->getBody()->write(json_encode($listaProductos));
         
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-        
+        if (empty($listaProductos)) {
+
+            return RespuestaJson::Mensaje($response,"No hay productos pendientes en la cocina",200);
+        }
+        return RespuestaJson::Mensaje($response, $listaProductos,200);
     }
+
     public function listarProductosPendientesCervezeria($request, $response, $args)
     {
-        $listaProductos = Producto::listarProductosPedidos('cervezeria');
-        $response->getBody()->write(json_encode($listaProductos));
+       $listaProductos = Producto::listarProductosPedidos('cerveceria');
         
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        // Verificar si la lista de productos está vacía
+        if (empty($listaProductos)) {
+
+            return RespuestaJson::Mensaje($response,"No hay productos pendientes en la cerveceria",200);
+        }
+        return RespuestaJson::Mensaje($response, $listaProductos,200);
         
     }
     public function listarProductosPendientesBar($request, $response, $args)
     {
-        $listaProductos = Producto::listarProductosPedidos('bar');
-        $response->getBody()->write(json_encode($listaProductos));
+        $listaProductos = Producto::listarProductosPedidos('cocteleria');
         
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        if (empty($listaProductos)) {
+            return RespuestaJson::Mensaje($response,"No hay productos pendientes en la cocina",200);
+        }
+        return RespuestaJson::Mensaje($response, $listaProductos,200);
         
     }
 
     public function cambiarEstadoProducto($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-        $idPedido = $parametros['idPedido'];
-        $nombreProducto = $parametros['nombre_producto'];
+        $id_pedido = $parametros['id_pedido'];
+        $nombre_producto = $parametros['nombre_producto'];
         $tiempo_preparacion = $parametros['tiempo_preparacion'];
 
-        try {
-            // Llamar al método de la clase Producto para cambiar el estado
-            Producto::cambiarEstado($idPedido, $nombreProducto, $tiempo_preparacion);
-            Pedido::actualizarTiempoEspera($idPedido,$tiempo_preparacion);
-            // Responder con éxito
-            $message = ['message' => 'Estado actualizado correctamente'];
-            $response->getBody()->write(json_encode($message));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-        } catch (Exception $e) {
-            // En caso de error, devolver una respuesta de error
-            $error = [
-                'error' => true,
-                'message' => 'Error al actualizar el estado del producto',
-                'details' => $e->getMessage()
-            ];
-            $response->getBody()->write(json_encode($error));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        $producto = ["nombre_producto" => $nombre_producto,"id_pedido" => $id_pedido];
+        
+        if(Producto::ExisteProductoPendiente($producto))
+        {
+            try 
+            {
+                Producto::cambiarEstado($id_pedido, $nombre_producto, $tiempo_preparacion);
+                Pedido::actualizarTiempoEspera($id_pedido,$tiempo_preparacion);
+                return RespuestaJson::Exito($response,"Cambio el estado del producto",200);
+
+            } catch (Exception $e) {
+                return RespuestaJson::Error($response,"Error al actualizar producto",500);
+            }
         }
+        return RespuestaJson::Error($response,"El producto no esta pendiente",500);
+        
     }
 
 
     public function cambiarAListo($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-        $idPedido = $parametros['idPedido'];
-        $nombreProducto = $parametros['nombreProducto'];
-        //$tiempo_preparacion = $parametros['tiempo_preparacion'];
+        
+        $id_pedido = $parametros['id_pedido'];
+        $nombre_producto = $parametros['nombre_producto'];
 
-        try {
-            // Llamar al método de la clase Producto para cambiar el estado
-            Producto::cambiarAListo($idPedido, $nombreProducto);
-            //Pedido::actualizarTiempoEspera($idPedido,$tiempo_preparacion);
-            // Responder con éxito
-            $message = ['message' => 'Estado actualizado correctamente'];
-            $response->getBody()->write(json_encode($message));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-        } catch (Exception $e) {
-            // En caso de error, devolver una respuesta de error
-            $error = [
-                'error' => true,
-                'message' => 'Error al actualizar el estado del producto',
-                'details' => $e->getMessage()
-            ];
-            $response->getBody()->write(json_encode($error));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+        if (!ValidadorProducto::ValidarCamposProducto($parametros)) {
+            return RespuestaJson::Error($response, "Complete los campos", 400);
         }
+        
+        try 
+        {
+            if(Producto::ExisteProductoPendiente($parametros))
+            {
+                Producto::cambiarAListo($id_pedido, $nombre_producto);
+                return RespuestaJson::Exito($response,"Producto actualizado : listo para servir");
+            }
+            return RespuestaJson::Error($response, "el producto no esta en pendientes",200);
+            
+        } catch (Exception $e) {
+            return RespuestaJson::Error("Error al cambiar estado a listo : $e");
+        }
+        
+        
     }
 
-    public function pedidoListo($request, $response, $args){
+    public static function VerPedidosListos($request, $response, $args)
+    {
+        $lista = Pedido::VerPedidosListos();
+        if(!$lista)
+        {
+            return RespuestaJson::Error($response,"Error al obtener la lista",200);
+        }
+        return RespuestaJson::Exito($response,(array("Pedidos Listos " => $lista)),200);
+        
+    }
+
+
+    public function PedidoListo($request, $response, $args){
+        
         $parametros = $request->getParsedBody();
-        $idPedido = $parametros['idPedido'];
-        $idmesa = $parametros['idMesa'];
+        $id_pedido = $parametros['id_pedido'];
+        $id_mesa = $parametros['id_mesa'];
 
-        try{
-            Pedido::EntregarPedido($idPedido);
-            $exitomesa = Mesa::cambiarEstado($idmesa,'con cliente comiendo');
-            var_dump($exitomesa);
-            $payload = json_encode(array('message' => 'pedido entregado y mesa actualizada'));
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        if(Pedido::ValidarPedidoExistente($id_pedido) && Mesa::ValidarMesaExistente($id_mesa))
+        {
+            Pedido::EntregarPedido($id_pedido);
+            Mesa::cambiarEstado($id_mesa,'con cliente comiendo');
+            return RespuestaJson::Exito($response,"Pedido entregado , Cliente comiendo",200);
         }
-        catch (Exception $e){
-            $payload = array('message' => 'Error,no se pudo actualizar los datos');
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-        }
+        return RespuestaJson::Error($response,"No se puedo entregar el pedido al cliente",400);
+            
+        
+        
+    }
 
+    public function CobrarPedido($request, $response, $args){
+        $parametros = $request->getParsedBody();
+        $id_pedido = $parametros['id_pedido'];
+        $id_mesa = $parametros['id_mesa'];
+
+
+        if(Pedido::ValidarPedidoExistente($id_pedido) && Mesa::ValidarMesaExistente($id_mesa))
+        {
+            Pedido::EntregarPedido($id_pedido);
+            Mesa::cambiarEstado($id_mesa,'con cliente pagando');
+            return RespuestaJson::Exito($response,"Mesa actualizada : El cliente esta pagando",200);
+        }
+        return RespuestaJson::Error($response,"No se puedo realizar el cobro",400);
     }
 
 }

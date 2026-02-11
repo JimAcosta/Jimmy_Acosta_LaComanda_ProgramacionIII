@@ -25,4 +25,16 @@ class SocioController extends Socio implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
+
+    public function CerrarMesa($request, $response, $args){
+        $parametros = $request->getParsedBody();
+        $id_mesa = $parametros['id_mesa'];
+
+        if(Mesa::cambiarEstado($id_mesa,'cerrada'))
+        {
+            return RespuestaJson::Exito($response,"El cliente pago, Mesa Cerrada",200);
+        }
+        return RespuestaJson::Error($response,"no se pudo cerrar la mesa",400);
+
+    }
 }

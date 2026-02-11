@@ -22,6 +22,7 @@ require_once __DIR__ . '/controllers/ProductoController.php';
 require_once __DIR__ . '/controllers/PedidoController.php';
 require_once __DIR__ . '/controllers/MesaController.php';
 require_once __DIR__ . '/controllers/ClienteController.php';
+require_once __DIR__ . '/controllers/EncuestaController.php';
 require_once __DIR__ . '/middlewares/UsuarioMiddleware.php';
 require_once __DIR__ . '/middlewares/ConfirmarTipo.php';
 
@@ -38,17 +39,24 @@ $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
 // Routes
+
+
 $app->get('/VerUsuarios', \UsuarioController::class . ':TraerTodos');
+$app->get('/VerUsuario', \UsuarioController::class . ':TraerUno');
+$app->put('/Modificar',\UsuarioController::class . ':ModificarUno');
+
+$app->post('/CrearMesa',\MesaController::class . ':CargarUno')->add(new ConfirmarTipo(['socio']));
+
 $app->post('/Login',\UsuarioController::class . ':Login');
-$app->post('/CargarUsuario', \UsuarioController::class . ':CargarUno')->add(new UsuarioMiddleware());
+$app->post('/CargarUsuario', \UsuarioController::class . ':CargarUno');
 $app->get('/VerEmpleado/{id}', \EmpleadoController::class . ':TraerEmpleadoPorID');
 $app->post('/TomarFotoMesa', \EmpleadoController::class . ':cargarFoto')->add(new ConfirmarTipo(['mozo']));
 $app->post('/TomarPedido', \EmpleadoController::class . ':cargarPedido')->add(new ConfirmarTipo(['mozo']));
-$app->get('/listarProductosPendientesCocina/{sector}', \EmpleadoController::class . ':listarProductosPendientesCocina')->add(new ConfirmarTipo(['Cocinero']));
+$app->get('/listarProductosPendientesCocina', \EmpleadoController::class . ':listarProductosPendientesCocina')->add(new ConfirmarTipo(['cocinero']));
 $app->get('/listarProductosPendientesCervezeria', \EmpleadoController::class . ':listarProductosPendientesCervezeria')->add(new ConfirmarTipo(['cervecero']));
 $app->get('/listarProductosPendientesBar', \EmpleadoController::class . ':listarProductosPendientesBar')->add(new ConfirmarTipo(['bartender']));
 ///en preparacion
-$app->put('/CambiarEstadoProductoCocina', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['Cocinero']));
+$app->put('/CambiarEstadoProductoCocina', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cocinero']));
 $app->put('/CambiarEstadoProductoCervezeria', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['cervecero']));
 $app->put('/CambiarEstadoProductoBar', \EmpleadoController::class . ':cambiarEstadoProducto')->add(new ConfirmarTipo(['bartender']));
 $app->get('/VerTiempoEspera', \UsuarioController::class . ':verTiempoDeEspera')->add(new ConfirmarTipo(['cliente']));
@@ -59,15 +67,25 @@ $app->put('/ProductoDeCocinaListo', \EmpleadoController::class . ':cambiarAListo
 $app->put('/ProductoDeCerveceriaListo', \EmpleadoController::class . ':cambiarAListo')->add(new ConfirmarTipo(['cervecero']));
 $app->put('/ProductoDeBarListo', \EmpleadoController::class . ':cambiarAListo')->add(new ConfirmarTipo(['bartender']));
 //cambiarestadomesa
+
+
+$app->get('/VerPedidosListos', \EmpleadoController::class . ':VerPedidosListos')->add(new ConfirmarTipo(['mozo']));
 $app->put('/PedidoListo', \EmpleadoController::class . ':PedidoListo')->add(new ConfirmarTipo(['mozo']));
 
+$app->put('/CobrarPedido', \EmpleadoController::class . ':CobrarPedido')->add(new ConfirmarTipo(['mozo']));
+$app->put('/CerrarMesa', \SocioController::class . ':CerrarMesa')->add(new ConfirmarTipo(['socio']));
+
+$app->post('/RealizarEncuesta', \EncuestaController::class . ':RealizarEncuesta')->add(new ConfirmarTipo(['cliente']));
+
+
+//Productos
 $app->post('/AgregarProducto', \ProductoController::class . ':CargarUno');
 $app->get('/VerProductos', \ProductoController::class . ':TraerTodos');
 $app->post('/AgregarPedido', \PedidoController::class . ':CargarUno');
 
 $app->post('/AgregarMesa', \MesaController::class . ':CargarUno');
 $app->get('/VerMesas', \MesaController::class . ':TraerTodos');
-
+$app->get('/VerMejoresComentarios',\EncuestaController::class . ':VerMejoresComentarios')->add(new ConfirmarTipo(['socio']));
 
 
 

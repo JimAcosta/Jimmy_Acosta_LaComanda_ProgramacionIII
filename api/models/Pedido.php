@@ -5,10 +5,11 @@ class Pedido
     public $id_pedido;
     public $cliente_asignado;
     public $estado;
-    public $preciototal;
+    public $precio_total;
     public $mesa_asignada; 
     public $mozo_asignado;
     public $tiempo_entrega;
+    public $foto_mesa;
 
     
     private function generarId() {
@@ -26,8 +27,6 @@ class Pedido
             $this-> preciototal += $item['precio'];
         }
         
-        
-        var_dump("entra aca01");
 
         // Insertar el pedido en la tabla 'pedidos'
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (id_pedido, cliente_asignado, estado, precio_total, mesa_asignada, mozo_asignado, tiempo_entrega) 
@@ -41,7 +40,6 @@ class Pedido
         $consulta->bindValue(':tiempo_entrega', $this->tiempo_entrega, PDO::PARAM_INT);
 
         $consulta->execute();
-        var_dump("es aca01");
         //var_dump("dentro del for",$producto['estado']);
         
         return $idPedido;
@@ -50,7 +48,6 @@ class Pedido
     // Método para insertar productos en la tabla 'productos_pedidos'
     private function insertarProductoPedido($idPedido, $nombreProducto, $estado,$tiempo_preparacion)
     {
-        var_dump("es aca en el metodo");
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
 
         $producto = Producto::obtenerProductoPorNombre($nombreProducto);
@@ -65,7 +62,6 @@ class Pedido
             $consulta->bindValue(':estado', $estado, PDO::PARAM_STR);
             $consulta->bindValue(':sector', $producto['sector'], PDO::PARAM_STR);
             $consulta->bindValue(':tiempo_preparacion',$tiempo_preparacion,PDO::PARAM_INT);
-            var_dump("es aca");
             // Ejecuta la consulta
             $consulta->execute();
             return $producto;
@@ -78,7 +74,7 @@ class Pedido
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id_pedido, cliente_asignado, estado, preciototal, mesa_asignada, mozo_asignado, tiempo_entrega FROM pedidos");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id_pedido, cliente_asignado, estado, precio_total, mesa_asignada, mozo_asignado, tiempo_entrega FROM pedidos");
         
         $consulta->execute();
         $resultado = $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
@@ -144,28 +140,55 @@ class Pedido
         }
     }
 
+
+    public static function VerPedidosListos()
+    {
+        try
+        {
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE estado = 'listo para servir'");
+            $consulta->execute();
+            $resultado = $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+            //var_dump($resultado);
+            return $resultado;
+
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
+
+
     public static function EntregarPedido($idPedido)
     {
-        // Obtener la instancia de acceso a la base de datos
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-    
-        // Consulta para obtener los detalles del pedido usando el idPedido
-        $consulta = $objAccesoDatos->prepararConsulta("UPDATE pedidos SET estado = 'entregado' WHERE id_pedido = :idPedido");
-    
-        // Asignar el valor de idPedido al parámetro de la consulta
+
+        $consulta = $objAccesoDatos->prepararConsulta(
+            "UPDATE pedidos SET estado = 'entregado' WHERE id_pedido = :idPedido"
+        );
+
         $consulta->bindValue(':idPedido', $idPedido, PDO::PARAM_INT);
-    
-        // Ejecutar la consulta
+
         $consulta->execute();
-    
-        // Obtener el resultado
-        $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
-    
-        // Verificar si se encontró el pedido
-        if ($resultado) {
-            return $resultado; // Retorna los datos del pedido
+
+        // Verificamos si se actualizó al menos una fila
+        if ($consulta->rowCount() > 0) {
+            return true;
         } else {
-            return null; // No se encontró el pedido
+            return false;
         }
-    }   
+    } 
+    public static function ValidarPedidoExistente($idPedido)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+
+        $consulta = $objAccesoDatos->prepararConsulta(
+        "SELECT 1 FROM pedidos WHERE id_pedido = :idPedido LIMIT 1;");
+        
+        $consulta->bindValue(':idPedido', $idPedido, PDO::PARAM_STR);
+        $consulta->execute();
+
+        $resultado = $consulta->fetch();
+
+        return $resultado !== false;
+    }
 }

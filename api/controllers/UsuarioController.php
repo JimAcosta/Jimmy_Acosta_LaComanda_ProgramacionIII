@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/Usuario.php';
 require_once __DIR__ . '/../interfaces/IApiUsable.php';
 require_once __DIR__ . '/../utils/AutentificadorJWT.php' ;
+require_once __DIR__ . '/../validadores/ValidadorUsuario.php' ;
 
 class UsuarioController extends Usuario implements IApiUsable
 {
@@ -23,46 +24,57 @@ class UsuarioController extends Usuario implements IApiUsable
         $usr->estado = $estado;
         $usr->fechaAlta = $fechaAlta;
         $usr->fechaBaja = $fechaBaja;
-        $usr->crearUsuario();
+        if(ValidadorUsuario::ValidarUsuarioNuevo($usr))
+        {
+            if($usr->crearUsuario()){
+                return RespuestaJson:: Exito($response,"Usuario Nuevo Creado con exito",200);
+            }
+    
+        }else{
+            return RespuestaJson::Error($response,"Algo salio mal",400);
+        }
 
-        $payload = json_encode(array("mensaje" => "Usuario creado con éxito"));
-
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
+        
     }
 
     public function TraerUno($request, $response, $args)
     {
-        // Buscamos usuario por nombre
-        $usr = $args['usuario'];
-        $usuario = Usuario::obtenerUsuario($usr);
-        $payload = json_encode($usuario);
-
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
+        $parametros = $request->getQueryParams();
+        $usr = $parametros['usuario'] ;
+        $id = $parametros['id'] ;
+        if($usuario = Usuario::obtenerUsuario($usr,$id)){
+            return RespuestaJson::Exito($response,$usuario,200);
+        }
+        else{
+            return RespuestaJson::Error($response,"No se pudo obtener el usuario",500); 
+        }
+        
     }
 
     public function TraerTodos($request, $response, $args)
     {
-        $lista = Usuario::obtenerTodos();
-        $payload = json_encode(array("listaUsuario" => $lista));
+        if($lista = Usuario::obtenerTodos())
+        {
+            RespuestaJson::Exito($response,"Lista de usuarios: $lista",200);
+        }
 
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
+        return RespuestaJson::Error($response,"No se pudo obtener la lista de usuarios",400);
+
     }
 
-    /*public function ModificarUno($request, $response, $args)
+    public function ModificarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
+        if(Usuario::modificarUsuario($nombre))
+        {
+            return Respuestajson::Exito($response,"usuario modificado con exito",200);
+        }
+        return RespuestaJson::Error($response,"No se pudo modificar el usuario",400);
 
-        $nombre = $parametros['nombre'];
-        Usuario::modificarUsuario($nombre);
+        
 
-        $payload = json_encode(array("mensaje" => "Usuario modificado con éxito"));
 
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
-    }*/
+    }
 
     public function BorrarUno($request, $response, $args)
     {
@@ -77,6 +89,7 @@ class UsuarioController extends Usuario implements IApiUsable
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    
     public function Login($request, $response, $args)
     {
         $params = $request->getParsedBody();
@@ -87,16 +100,9 @@ class UsuarioController extends Usuario implements IApiUsable
 
         if ($usuarioAutenticado) {
             $token = AutentificadorJWT::CrearToken(['usuario' => $usuarioAutenticado->usuario, 'tipo' => $usuarioAutenticado->tipo, 'id'=> $usuarioAutenticado->id]);
-
-            // Responder con el token
-            $payload = json_encode(['token' => $token]);
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+            return RespuestaJson::Exito($response,"Token = $token",200);
         } else {
-            // Responder con un mensaje de error si las credenciales no son correctas
-            $payload = json_encode(['mensaje' => 'Usuario o contraseña incorrectos']);
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(401);
+            return RespuestaJson::Error($response,"Usuario o clave incorrectas",200);
         }
     }
 
@@ -109,16 +115,11 @@ class UsuarioController extends Usuario implements IApiUsable
         $tiempoEspera = Usuario::verTiempoEspera($idPedido, $idMesa);
 
         if ($tiempoEspera) {
-            // Responder con el token
-            $payload = json_encode(['tiempo de espera de su pedido' => $tiempoEspera]);
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-        } else {
-            // Responder con un mensaje de error si las credenciales no son correctas
-            $payload = json_encode(['mensaje' => 'El pedido no existe']);
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(401);
+            return RespuestaJson::Exito($response,"tiempo de espera de su pedido $tiempoEspera minutos",200);
         }
-    }
+         else {
+            return RespuestaJson::Error($response,"El pedido no existe",401);
+        }
 
+    }   
 }

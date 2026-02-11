@@ -12,52 +12,79 @@ class Usuario
 
     public function crearUsuario()
     {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, fecha_alta, fecha_baja, estado) 
-                                                    VALUES (:usuario, :clave, :tipo, :fecha_alta, :fecha_baja , :estado)");
+        try{
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
 
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, fecha_alta, fecha_baja, estado) 
+            VALUES (:usuario, :clave, :tipo, :fecha_alta, :fecha_baja , :estado)");
 
-        $fechaAlta = new DateTime();
-        $fechaAltaFormatted = $fechaAlta->format('Y-m-d H:i:s');
+            $this->fechaBaja = null;
 
-        $fechaBajaFormatted = null;
+            $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
+            $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
+            $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+            $consulta->bindValue(':fecha_alta', $this->fechaAlta, PDO::PARAM_STR);
+            $consulta->bindValue(':fecha_baja', $this->fechaBaja, PDO::PARAM_NULL); // También puede ser PDO::PARAM_STR si usás '' o fechas
 
+            $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
 
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':fecha_alta', $fechaAltaFormatted, PDO::PARAM_STR);
-        $consulta->bindValue(':fecha_baja', $fechaBajaFormatted, PDO::PARAM_STR);
-        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
-
-        $consulta->execute();
-
-        return $objAccesoDatos->obtenerUltimoId();
+            if($consulta->execute()){
+                return $objAccesoDatos->obtenerUltimoId();
+            }
+            else{
+                return false;
+            }    
+        }catch (Exception $e) {
+            error_log("Error en crearUsuario: " . $e->getMessage());
+            return false;
+        }
     }
+
+    public static function obtenerUsuario($usuario,$id)
+    {
+        try{
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, tipo,estado,fecha_alta AS fechaAlta FROM usuarios WHERE usuario = :usuario AND id = :id");
+            $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+            $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        
+            if($consulta->execute()){
+                return $consulta->fetchObject('Usuario');
+            }else{
+                return false;
+            } 
+        }catch (Exception $e) {
+            error_log("Error en obtenerUsuario: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
     public static function obtenerTodos()
     {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        // Seleccionamos todos los campos de la tabla 'usuarios'
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, tipo, fecha_alta, fecha_baja, estado FROM usuarios");
-        $consulta->execute();
-
-        // Devolvemos todos los resultados como una lista de objetos 'usuario'
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+        try{
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, tipo, fecha_alta,
+            fecha_baja, estado FROM usuarios");
+            
+            if($consulta->execute()){
+                return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+            }
+            else{
+                return false;
+            }
+        }catch (Exception $e) {
+            error_log("Error en obtenerTodos: " . $e->getMessage());
+            return false;
+        }
+        
+        
     }
 
-    public static function obtenerUsuario($usuario)
-    {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM usuarios WHERE usuario = :usuario");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
-        $consulta->execute();
 
-        return $consulta->fetchObject('Usuario');
+    public static function modificarUsuario($usuario){
+
     }
-
-
     public static function borrarUsuario($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
@@ -68,31 +95,43 @@ class Usuario
         $consulta->execute();
     }
 
-    /*public static function Logearse($usuario, $clave)
+    
+
+
+    public static function ValidarUsuario($usuario)
     {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE usuario = :usuario LIMIT 1");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
-        $consulta->execute();
-
-        $usuarioDb = $consulta->fetch(PDO::FETCH_ASSOC);
-
-        if (!$usuarioDb) {
-            return null;
+        if (!isset($usuario->usuario) || !is_string($usuario->usuario) || strlen($usuario->usuario) > 15) {
+            error_log("en el nombre");
+            return false;
         }
 
-        // Verificar la contraseña usando password_verify
-        /*if (password_verify($clave, $usuarioDb['clave'])) {
-
-            $usuarioObj = new Usuario();
-            $usuarioObj->usuario = $usuarioDb['usuario'];
-            $usuarioObj->tipo = $usuarioDb['tipo']; 
-            return $usuarioObj;
+        if (!isset($usuario->clave) || !is_string($usuario->clave)) {
+            error_log("en la clave");
+            return false;
         }
 
-        return null;
-    }*/
+        $tiposValidos = ['cocinero', 'cervecero', 'bartender','socio','cliente','mozo'];
+        if (!isset($usuario->tipo) || !in_array(strtolower($usuario->tipo), $tiposValidos)) {
+            error_log("en el tipo");
+            return false;
+        }
+
+        $estadosValidos = ['activo', 'suspendido', 'de baja'];
+        if (!isset($usuario->estado) || !in_array(strtolower($usuario->estado), $estadosValidos)) {
+            error_log("en el estado");
+            return false;
+        }
+        
+    }
+
+
+
+    
+
+
+
+
+
 
     public static function Logearse($usuario, $clave)
     {
@@ -115,30 +154,26 @@ class Usuario
     }
 
     public static function verTiempoEspera($idPedido, $idMesa){
-        try {
-            // Obtener la instancia de acceso a la base de datos
+
+        try 
+        {
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
     
-            // Preparar la consulta para obtener el tiempo de entrega
             $consulta = $objAccesoDatos->prepararConsulta("SELECT tiempo_entrega FROM pedidos 
-                WHERE id_pedido = :idPedido AND mesa_asignada = :idMesa
-            ");
+                WHERE id_pedido = :idPedido AND mesa_asignada = :idMesa");
     
-            // Asignar los valores de los parámetros
-            $consulta->bindValue(':idPedido', $idPedido, PDO::PARAM_INT);
-            $consulta->bindValue(':idMesa', $idMesa, PDO::PARAM_INT);
+            $consulta->bindValue(':idPedido', $idPedido, PDO::PARAM_STR);
+            $consulta->bindValue(':idMesa', $idMesa, PDO::PARAM_STR);
     
-            // Ejecutar la consulta
             $consulta->execute();
     
-            // Obtener el resultado
             $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
-    
-            // Retornar el tiempo de entrega si existe
-            if ($resultado) {
+            if ($resultado)
+            {
                 return $resultado['tiempo_entrega'];
-            } else {
-                return null; // No se encontró el pedido
+            }
+            else {
+                return null; 
             }
         } catch (Exception $e) {
             error_log("Error al obtener el tiempo de entrega: " . $e->getMessage());

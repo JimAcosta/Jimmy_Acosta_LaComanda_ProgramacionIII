@@ -19,7 +19,7 @@ class Mesa
     
         $consulta->execute();
 
-        return $objAccesoDatos->obtenerUltimoid_mesa();
+        return $objAccesoDatos->obtenerUltimoid();
     }
 
     public static function obtenerTodos()
@@ -32,17 +32,15 @@ class Mesa
     }
 
 
-    public static function cambiarEstado($id_mesaMesa, $estadoMesa)
+    public static function cambiarEstado($id_mesa, $estado_mesa)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
 
         // Consulta para actualizar el estado de la mesa
-        $consulta = $objAccesoDatos->prepararConsulta("UPDATE mesas SET estado = :estadoMesa WHERE id_mesa = :id_mesaMesa");
-        var_dump($estadoMesa,$id_mesaMesa);
-        $consulta->bindValue(':estadoMesa', $estadoMesa, PDO::PARAM_STR);
-        $consulta->bindValue(':id_mesaMesa', $id_mesaMesa, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE mesas SET estado = :estado_mesa WHERE id_mesa = :id_mesa");
+        $consulta->bindValue(':estado_mesa', $estado_mesa, PDO::PARAM_STR);
+        $consulta->bindValue(':id_mesa', $id_mesa, PDO::PARAM_STR);
 
-        // Ejecutar la consulta
         $consulta->execute();
 
         if ($consulta->rowCount() > 0) {
@@ -53,6 +51,28 @@ class Mesa
     }
 
 
+    public static function ValidarMesaExistente($id_mesa)
+    {
+        try
+        {
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
 
+        $consulta = $objAccesoDatos->prepararConsulta(
+            "SELECT 1 FROM mesas WHERE id_mesa = :id_mesa LIMIT 1;"
+        );
+
+        $consulta->bindValue(':id_mesa', $id_mesa, PDO::PARAM_INT);
+        $consulta->execute();
+
+        $resultado = $consulta->fetch();
+
+        return $resultado !== false;
+        }
+        catch (Exception $e) {
+            error_log("Error Mesa inexistente: " . $e->getMessage());
+            return false;
+        }
+
+    }
     
 }

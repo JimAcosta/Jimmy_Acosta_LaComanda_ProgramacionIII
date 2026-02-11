@@ -1,6 +1,7 @@
 <?php
 
 require_once "Usuario.php";
+require_once "Pedido.php";
 
 class Empleado extends Usuario{
 
@@ -69,16 +70,49 @@ class Empleado extends Usuario{
 
     public static function guardarFotoEnPedido($idPedido, $nombreFoto)
     {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("UPDATE pedidos SET fotomesa = :fotomesa WHERE id_pedido = :id_pedido");
+        
+    try
+    {
+        if(Producto::ExisteProductoPorNombre($idPedido))
+        {
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE pedidos SET fotomesa = :fotomesa WHERE id_pedido = :id_pedido");
 
-        // Vinculamos los parámetros
-        $consulta->bindValue(':fotomesa', $nombreFoto, PDO::PARAM_STR);
-        $consulta->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
+            // Vinculamos los parámetros
+            $consulta->bindValue(':fotomesa', $nombreFoto, PDO::PARAM_STR);
+            $consulta->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
 
-        // Ejecutamos la consulta
-        $consulta->execute();
-        $exito = true;
-        return $exito;
+            // Ejecutamos la consulta
+            $consulta->execute();
+            $exito = true;
+            return $exito;
+        }
+        
     }
+    catch (Exception $e) {
+            return RespuestaJson::Error($response, [ 'error' => $e->getMessage()], 500);
+        }
+
+    }
+
+    public static function ValidarMozoExistente($idMozo)
+{
+    $objAccesoDatos = AccesoDatos::obtenerInstancia();
+
+    $consulta = $objAccesoDatos->prepararConsulta(
+        "SELECT EXISTS (
+            SELECT 1 
+            FROM usuarios 
+            WHERE id = :idMozo 
+            AND tipo = 'mozo'
+        ) AS existe"
+    );
+
+    $consulta->bindValue(':idMozo', $idMozo, PDO::PARAM_INT);
+    $consulta->execute();
+
+    $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+
+    return $resultado['existe'] == 1;
+}
 }

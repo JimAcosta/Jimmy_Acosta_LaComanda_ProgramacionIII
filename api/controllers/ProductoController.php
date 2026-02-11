@@ -7,32 +7,37 @@ class ProductoController extends Producto implements IApiUsable
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-        $nombre = $parametros['nombre'];
-        $precio = $parametros['precio'];
-        $sector = $parametros['sector'];
-        $tiempo_preparacion = $parametros['tiempo_preparacion'];
 
-    
         $producto = new Producto();
-        $producto->nombre = $nombre;
-        $producto->precio = $precio;
-        $producto->sector = $sector;
-        $producto->tiempo_preparacion = $tiempo_preparacion;
-        $producto->crearProducto();
+        $producto->nombre = $parametros['nombre'] ?? null;
+        $producto->precio = $parametros['precio'] ?? null;
+        $producto->sector = $parametros['sector'] ?? null;
 
-        $payload = json_encode(array("mensaje" => "Producto creado con exito"));
+        if(!Producto::ValidarProducto($producto)){
+            return RespuestaJson::Error($response,"Producto Invalido,Verifique los campos",400);
+        }
+        if (!$producto->crearProducto()) {
+            return RespuestaJson::error($response, "No se pudo crear el producto", 500);
+        }
 
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
+        return RespuestaJson::exito($response, "Producto creado con exito", 201);
     }
 
 
-    public function TraerTodos($request, $response, $args){
-        $lista = Producto::obtenerTodos();
-        $payload = json_encode(array("listaProductos" => $lista));
+    public function TraerTodos($request, $response, $args)
+    {
+        try {
+            $lista = Producto::obtenerTodos();
+            
+            if ($lista) {
+                return RespuestaJson::Exito($response, ['listaProductos' => $lista], 200);
+            } else {
+                return RespuestaJson::Error($response, "No se pudo realizar la consulta", 400);
+            }
 
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        } catch (Exception $e) {
+            return RespuestaJson::Error($response, [ 'error' => $e->getMessage()], 500);
+        }
     }
+
 }
