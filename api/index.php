@@ -40,7 +40,10 @@ $app->addBodyParsingMiddleware();
 
 // Routes
 
-
+$app->get('/ping', function($req,$res,$args){
+    $res->getBody()->write(json_encode(['msg'=>'API funcionando!']));
+    return $res->withHeader('Content-Type','application/json');
+});
 $app->get('/VerUsuarios', \UsuarioController::class . ':TraerTodos');
 $app->get('/VerUsuario', \UsuarioController::class . ':TraerUno');
 $app->put('/Modificar',\UsuarioController::class . ':ModificarUno');
