@@ -7,7 +7,7 @@ require_once __DIR__ . '/../models/Mesa.php';
 require_once __DIR__ . '/../utils/AutentificadorJWT.php';
 require_once __DIR__ . '/../middlewares/ConfirmarTipo.php';
 require_once __DIR__ . '/../utils/RespuestaJson.php';
-require_once __DIR__ . '/../Validadores/ValidadorProductos.php';
+require_once __DIR__ . '/../validadores/ValidadorProductos.php';
 
 
 class EmpleadoController extends Empleado
