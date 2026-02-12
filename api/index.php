@@ -15,16 +15,16 @@ require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/db/AccesoDatos.php';
 // require_once './middlewares/Logger.php';
 
-require_once __DIR__ . './controllers/UsuarioController.php';
-require_once __DIR__ . './controllers/EmpleadoController.php';
-require_once __DIR__ . './controllers/SocioController.php';
-require_once __DIR__ . './controllers/ProductoController.php';
-require_once __DIR__ . './controllers/PedidoController.php';
-require_once __DIR__ . './controllers/MesaController.php';
-require_once __DIR__ . './controllers/ClienteController.php';
-require_once __DIR__ . './controllers/EncuestaController.php';
-require_once __DIR__ . './middlewares/UsuarioMiddleware.php';
-require_once __DIR__ . './middlewares/ConfirmarTipo.php';
+require_once __DIR__ . '/controllers/UsuarioController.php';
+require_once __DIR__ . '/controllers/EmpleadoController.php';
+require_once __DIR__ . '/controllers/SocioController.php';
+require_once __DIR__ . '/controllers/ProductoController.php';
+require_once __DIR__ . '/controllers/PedidoController.php';
+require_once __DIR__ . '/controllers/MesaController.php';
+require_once __DIR__ . '/controllers/ClienteController.php';
+require_once __DIR__ . '/controllers/EncuestaController.php';
+require_once __DIR__ . '/middlewares/UsuarioMiddleware.php';
+require_once __DIR__ . '/middlewares/ConfirmarTipo.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../"); 
