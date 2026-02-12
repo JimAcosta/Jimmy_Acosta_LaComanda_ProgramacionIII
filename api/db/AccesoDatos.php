@@ -15,7 +15,7 @@ class AccesoDatos
             if ($dbType === "mysql") {
 
                 $host = $_ENV['MYSQL_HOST'];
-                $port = $_ENV['MYSQL_PORT']; // 🔥 IMPORTANTE
+                $port = $_ENV['MYSQL_PORT'];
                 $db   = $_ENV['MYSQL_DATABASE'];
                 $user = $_ENV['MYSQL_USER'];
                 $pass = $_ENV['MYSQL_PASSWORD'];
@@ -27,6 +27,8 @@ class AccesoDatos
                     $user,
                     $pass,
                     [
+                        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                        PDO::MYSQL_ATTR_SSL_CA => true,
                         PDO::ATTR_EMULATE_PREPARES => false,
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                     ]
