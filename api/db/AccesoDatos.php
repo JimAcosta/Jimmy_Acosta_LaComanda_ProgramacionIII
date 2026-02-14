@@ -41,8 +41,8 @@ class AccesoDatos
                     'pgsql:host=' . $_ENV['POSTGRES_HOST'] .
                     ';port=' . $_ENV['POSTGRES_PORT'] .
                     ';dbname=' . $_ENV['POSTGRES_DATABASE'],
-                    $_ENV['POSTGRES_USER'],
-                    $_ENV['POSTGRES_PASSWORD'],
+                                $_ENV['POSTGRES_USER'],
+                                $_ENV['POSTGRES_PASSWORD'],
                     [
                         PDO::ATTR_EMULATE_PREPARES => false,
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

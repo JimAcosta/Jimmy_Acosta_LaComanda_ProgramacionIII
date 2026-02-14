@@ -3,7 +3,8 @@ FROM php:8.3-cli
 WORKDIR /app
 
 # Instalar extensiones necesarias
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_pgsql
+
 
 COPY . .
 
