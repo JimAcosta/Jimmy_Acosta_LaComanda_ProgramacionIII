@@ -6,8 +6,8 @@ class Usuario
     public $usuario;
     public $clave;
     public $tipo;
-    public $fechaAlta;
-    public $fechaBaja;
+    public $fecha_alta;
+    public $fecha_baja;
     public $estado;
 
     public function crearUsuario()
