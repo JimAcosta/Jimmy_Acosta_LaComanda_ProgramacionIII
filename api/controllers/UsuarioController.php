@@ -55,7 +55,7 @@ class UsuarioController extends Usuario implements IApiUsable
     {
         if($lista = Usuario::obtenerTodos())
         {
-            RespuestaJson::Exito($response,['Lista Usuarios' => $lista],200);
+            return RespuestaJson::Exito($response,['Lista Usuarios' => $lista],200);
         }
 
         return RespuestaJson::Error($response,"No se pudo obtener la lista de usuarios",400);

@@ -1,0 +1,1387 @@
+{
+  "info": {
+    "_postman_id": "504e80a8-13a8-4173-9722-c6c919607083",
+    "name": "Tp_Comanda",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37958080"
+  },
+  "item": [
+    {
+      "name": "/CrearUsuario",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Samuel",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            },
+            {
+              "key": "estado",
+              "value": "activo",
+              "type": "text"
+            },
+            {
+              "key": "tipo",
+              "value": "cliente",
+              "type": "text"
+            },
+            {
+              "key": "fechaAlta",
+              "value": "08-12-2029",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CargarUsuario",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CargarUsuario"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/LoginSocio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Jimmy",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "LoginBar",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Karen",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/LoginMozo",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Antonio",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/LoginCocina",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Carolina",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/LoginCliente",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Samuel",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/LoginCervecero",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Yacki",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/Login",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/TomarPedido",
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {}
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk4MjI1OTYsImV4cCI6MTc2OTkwODk5NiwiYXVkIjoiZjQ0MDRjZGMyMjQxZTAwNjUzNWNlMmFiYThiOGM5YjBiY2VkMTljMyIsImRhdGEiOnsidXN1YXJpbyI6IkFudG9uaW8iLCJ0aXBvIjoibW96byIsImlkIjozfSwiYXBwIjoiVGVzdCBKV1QifQ.0OUTeQ8kzJ4El6G4WYFDVNgDkvixAWGEoO9nrxkeTaY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"cliente_asignado\": \"Jim Costa\",\r\n    \"estado\": \"pendiente\",\r\n    \"mesaAsignada\": \"MeFWzK\",\r\n    \"mozoAsignado\": \"3\",\r\n    \"productos\": [\r\n        {\r\n            \"nombre\": \"milanesa a caballo\"\r\n        },\r\n        {\r\n            \"nombre\": \"hamburguesa de garbanzos\"\r\n        },\r\n        {\r\n            \"nombre\": \"hamburguesa de garbanzos\"\r\n        },\r\n        {\r\n            \"nombre\": \"corona\"\r\n        },\r\n        {\r\n            \"nombre\": \"daikiri\"\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/TomarPedido",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "TomarPedido"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/TomarFotoMesa",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk4ODY0MzAsImV4cCI6MTc2OTk3MjgzMCwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkFudG9uaW8iLCJ0aXBvIjoibW96byIsImlkIjozfSwiYXBwIjoiVGVzdCBKV1QifQ.YA-CadJ6Q7HkSHdtuE3O26mvZv24sWe33xSEYHIiFCA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "foto",
+              "type": "file",
+              "fileNotInWorkingDirectoryWarning": "This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.",
+              "filesNotInWorkingDirectory": [
+                "/C:/Users/Jim/Desktop/ImagenesPartial/mesa.jpg"
+              ],
+              "src": "/C:/Users/Jim/Downloads/fotomesa2.jpg"
+            },
+            {
+              "key": "idPedido",
+              "value": "nLvVJ912",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/TomarFotoMesa",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "TomarFotoMesa"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/listarProductosPendientesCocina/cocina",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk4OTQ1MTcsImV4cCI6MTc2OTk4MDkxNywiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkNhcm9saW5hIiwidGlwbyI6ImNvY2luZXJvIiwiaWQiOjV9LCJhcHAiOiJUZXN0IEpXVCJ9.PYCMnuFxiBMOT6smyL8nAKXtsqvRgKZUTLYRk5SbaV4",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "sector",
+              "value": "cocina",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/listarProductosPendientesCocina",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "listarProductosPendientesCocina"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/listarProductosPendientesCervezeria",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk4OTQ1ODYsImV4cCI6MTc2OTk4MDk4NiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IllhY2tpIiwidGlwbyI6ImNlcnZlY2VybyIsImlkIjo2fSwiYXBwIjoiVGVzdCBKV1QifQ.f4iqkBh0A_eRFP4DZmkRudlvWLJUlE_4vIbIsf5O02M",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/listarProductosPendientesCervezeria",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "listarProductosPendientesCervezeria"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/listarProductosPendientesBar",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk4OTQ2MjIsImV4cCI6MTc2OTk4MTAyMiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkthcmVuIiwidGlwbyI6ImJhcnRlbmRlciIsImlkIjo0fSwiYXBwIjoiVGVzdCBKV1QifQ.sSQYXuQ6RGaEsTrpdzhW1GSSaDCekwoNlK1daJJUDJ0",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/listarProductosPendientesBar",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "listarProductosPendientesBar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CambiarEstadoProductoCocina",
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {}
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5MzM0NTksImV4cCI6MTc3MDAxOTg1OSwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkNhcm9saW5hIiwidGlwbyI6ImNvY2luZXJvIiwiaWQiOjV9LCJhcHAiOiJUZXN0IEpXVCJ9.KAcMbuse9_GdnbqEtgBFLR9yWPFUtt_MeCf38_CdrFU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "hamburguesa de garbanzos",
+              "type": "text"
+            },
+            {
+              "key": "tiempo_preparacion",
+              "value": "19",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CambiarEstadoProductoCocina",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CambiarEstadoProductoCocina"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CambiarEstadoProductoCervezeria",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5MzQwOTksImV4cCI6MTc3MDAyMDQ5OSwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IllhY2tpIiwidGlwbyI6ImNlcnZlY2VybyIsImlkIjo2fSwiYXBwIjoiVGVzdCBKV1QifQ.a5hHaqulSCGBuPTCkpmMZ0K1G4QTffIcF9ao6zuFVNI",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "Corona",
+              "type": "text"
+            },
+            {
+              "key": "tiempo_preparacion",
+              "value": "5",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CambiarEstadoProductoCervezeria",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CambiarEstadoProductoCervezeria"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CambiarEstadoProductoBar",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5MzQzNjYsImV4cCI6MTc3MDAyMDc2NiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkthcmVuIiwidGlwbyI6ImJhcnRlbmRlciIsImlkIjo0fSwiYXBwIjoiVGVzdCBKV1QifQ.mCzLlviJt81lFqJbqZHU_-1w00j-dBcpi0WZgq9h-tM",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "Daikiri",
+              "type": "text"
+            },
+            {
+              "key": "tiempo_preparacion",
+              "value": "12",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CambiarEstadoProductoBar",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CambiarEstadoProductoBar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerTiempoEspera",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5MzUwMDYsImV4cCI6MTc3MDAyMTQwNiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IlNhbXVlbCIsInRpcG8iOiJjbGllbnRlIiwiaWQiOjd9LCJhcHAiOiJUZXN0IEpXVCJ9.6NKPVy6e8T4BHFJDfHHdtdd4PL44nZiWw1EWOVwl_8Q",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerTiempoEspera?idPedido=CYzxv&idMesa=MeFfWzK",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerTiempoEspera"
+          ],
+          "query": [
+            {
+              "key": "idPedido",
+              "value": "CYzxv"
+            },
+            {
+              "key": "idMesa",
+              "value": "MeFfWzK"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerPedidos",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDM2MDcsImV4cCI6MTc3MDAzMDAwNywiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkppbW15IiwidGlwbyI6InNvY2lvIiwiaWQiOjF9LCJhcHAiOiJUZXN0IEpXVCJ9.1Z83TmgyvDeLk4EVPcXqk8Tc1DXr6rtpz8Nr4L9cV70",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerPedidos",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerPedidos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerPedido",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDM2MDcsImV4cCI6MTc3MDAzMDAwNywiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkppbW15IiwidGlwbyI6InNvY2lvIiwiaWQiOjF9LCJhcHAiOiJUZXN0IEpXVCJ9.1Z83TmgyvDeLk4EVPcXqk8Tc1DXr6rtpz8Nr4L9cV70",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerPedido?idPedido=UOwRL",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerPedido"
+          ],
+          "query": [
+            {
+              "key": "idPedido",
+              "value": "UOwRL"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/ProductoDeCocinaListo",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDMwMDAsImV4cCI6MTc3MDAyOTQwMCwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkNhcm9saW5hIiwidGlwbyI6ImNvY2luZXJvIiwiaWQiOjV9LCJhcHAiOiJUZXN0IEpXVCJ9.c2_bAPSLXpIxP7NUoIGkaGGEnMQ1j6Rj73WrEWlq7WU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "milanesa a caballo",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/ProductoDeCocinaListo",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "ProductoDeCocinaListo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/ProductoDeCerveceriaListo",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDMzMDksImV4cCI6MTc3MDAyOTcwOSwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IllhY2tpIiwidGlwbyI6ImNlcnZlY2VybyIsImlkIjo2fSwiYXBwIjoiVGVzdCBKV1QifQ.NiaM3isI0Det-2DHVTP91VC07KHpkHUGNH6Hl_NBODY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "Corona",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/ProductoDeCerveceriaListo",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "ProductoDeCerveceriaListo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/ProductoDeBarListo",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDMzNTgsImV4cCI6MTc3MDAyOTc1OCwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkthcmVuIiwidGlwbyI6ImJhcnRlbmRlciIsImlkIjo0fSwiYXBwIjoiVGVzdCBKV1QifQ.cAL088CImXZcA93B45cXsJigoLi1LdjP0YfdEQAnkeU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "nombre_producto",
+              "value": "daikiri",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/ProductoDeBarListo",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "ProductoDeBarListo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerPedidosListos",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDQ4NjgsImV4cCI6MTc3MDAzMTI2OCwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkFudG9uaW8iLCJ0aXBvIjoibW96byIsImlkIjozfSwiYXBwIjoiVGVzdCBKV1QifQ.QvZSYmtHWj_CVSVevTcpZ5YwzgdikUeqLvKJhB167yk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerPedidosListos",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerPedidosListos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CobrarPedido",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NzY5MjYsImV4cCI6MTc3MDA2MzMyNiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkFudG9uaW8iLCJ0aXBvIjoibW96byIsImlkIjozfSwiYXBwIjoiVGVzdCBKV1QifQ.uV13jx_Z_3NHXQuLjoSg_wzWkbVS4CToNvvjHAzidBc",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "id_mesa",
+              "value": "MeFWzK",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CobrarPedido",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CobrarPedido"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CerrarMesa",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NzY5ODYsImV4cCI6MTc3MDA2MzM4NiwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkppbW15IiwidGlwbyI6InNvY2lvIiwiaWQiOjF9LCJhcHAiOiJUZXN0IEpXVCJ9.d1VVSSOkMeLAENdG9WEk86XujEr4JTOJI3GicwMpGYU",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_mesa",
+              "value": "MeFWzK",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CerrarMesa",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CerrarMesa"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/RealizarEncuesta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id_mesa",
+              "value": "MeFWzK",
+              "type": "text",
+              "uuid": "84b972f9-cb9a-405a-a9e6-ec0a36ea1029"
+            },
+            {
+              "key": "id_pedido",
+              "value": "MveAZtds",
+              "type": "text",
+              "uuid": "b5d9d40e-0c0c-4539-94d3-70d1312005c2"
+            },
+            {
+              "key": "puntuacion_mesa",
+              "value": "6",
+              "type": "text",
+              "uuid": "00ec32b6-e50e-4021-b856-ced254dbab82"
+            },
+            {
+              "key": "puntuacion_mozo",
+              "value": "8",
+              "type": "text",
+              "uuid": "d81de799-bc9f-4536-8e82-6519473593f7"
+            },
+            {
+              "key": "puntuacion_cocinero",
+              "value": "6",
+              "type": "text",
+              "uuid": "4d734854-7da6-48a1-87a6-96b37a2dbcab"
+            },
+            {
+              "key": "puntuacion_restaurante",
+              "value": "7",
+              "type": "text",
+              "uuid": "b41c0dc8-331e-421d-be99-738321539688"
+            },
+            {
+              "key": "opinion",
+              "value": "buena",
+              "type": "text",
+              "uuid": "17048b04-ffba-4cc0-8eb3-d941dea6772a"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/RealizarEncuesta",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "RealizarEncuesta"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/AgregarProducto",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "nombre",
+              "value": "Mojito",
+              "type": "text"
+            },
+            {
+              "key": "precio",
+              "value": "20",
+              "type": "text"
+            },
+            {
+              "key": "sector",
+              "value": "cocteleria",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/AgregarProducto",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "AgregarProducto"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerProductos",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "nombre",
+              "value": "pizza especial",
+              "type": "text"
+            },
+            {
+              "key": "precio",
+              "value": "37",
+              "type": "text"
+            },
+            {
+              "key": "sector",
+              "value": "cocina",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerProductos",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerProductos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CargarUsuario",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "usuario",
+              "value": "Camila",
+              "type": "text"
+            },
+            {
+              "key": "clave",
+              "value": "1234",
+              "type": "text"
+            },
+            {
+              "key": "tipo",
+              "value": "socio",
+              "type": "text",
+              "uuid": "55c42b2e-5984-455b-903b-c0eeb0dac8db"
+            },
+            {
+              "key": "estado",
+              "value": "activo",
+              "type": "text",
+              "uuid": "12182fb0-3826-41c7-8403-470b54b08d7b"
+            },
+            {
+              "key": "fechaAlta",
+              "value": "2025-21-05",
+              "type": "text",
+              "uuid": "5e385b92-65c7-457e-b99d-00a9cc3976d2"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CargarUsuario",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CargarUsuario"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerUsuario",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM4NjI0MjQsImV4cCI6MTczMzkyMjQyNCwiYXVkIjoiNTMxNzZjMzdlZjFmZTc0YjEyODFjYjJkNTk2ZWM0MWUxMzkxYmE4YiIsImRhdGEiOnsidXN1YXJpbyI6Ikx1Y2FzIiwidGlwbyI6InNvY2lvIn0sImFwcCI6IlRlc3QgSldUIn0.PFasleS9MzvE0oFoyDA5Vs5PfX-tGR4S4sAIid2Xap4",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerUsuario?usuario=Jimmy&id=1",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerUsuario"
+          ],
+          "query": [
+            {
+              "key": "usuario",
+              "value": "Jimmy"
+            },
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/PedidoListo",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Njk5NDQ4NjgsImV4cCI6MTc3MDAzMTI2OCwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkFudG9uaW8iLCJ0aXBvIjoibW96byIsImlkIjozfSwiYXBwIjoiVGVzdCBKV1QifQ.QvZSYmtHWj_CVSVevTcpZ5YwzgdikUeqLvKJhB167yk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id_pedido",
+              "value": "CYzxv",
+              "type": "text"
+            },
+            {
+              "key": "id_mesa",
+              "value": "MeFWzK",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/PedidoListo",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "PedidoListo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/VerMejoresComentarios",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzExODIxODIsImV4cCI6MTc3MTI2ODU4MiwiYXVkIjoiYTM2MmVmZjM3ZTRiNTA0M2QxOGQ4ZGQ2ZDEyNjU1OWM0M2U1Njk3MSIsImRhdGEiOnsidXN1YXJpbyI6IkppbW15IiwidGlwbyI6InNvY2lvIiwiaWQiOjF9LCJhcHAiOiJUZXN0IEpXVCJ9.VH8uFoUY0B75YQeU2H8IuYv4r8KHXiXgUTcIzSGAlPs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/VerMejoresComentarios",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "VerMejoresComentarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/CrearMesa",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NzA3NzIyNDEsImV4cCI6MTc3MDg1ODY0MSwiYXVkIjoiMWJmNjc1NGI0NjFlZGE4MzNkMzNlOTQwZDgxZTFiM2JlY2E1MTFmMiIsImRhdGEiOnsidXN1YXJpbyI6IkppbW15IiwidGlwbyI6InNvY2lvIiwiaWQiOjF9LCJhcHAiOiJUZXN0IEpXVCJ9.bNjHGaMsO0STkV9qPVQdbs8KmvKzYkZEGBFybjGJd9w",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "estado",
+              "value": "cerrada",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://lacomanda-api.up.railway.app/CrearMesa",
+          "protocol": "https",
+          "host": [
+            "lacomanda-api",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "CrearMesa"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
