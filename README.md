@@ -14,7 +14,7 @@ El sistema permite administrar pedidos, productos, empleados, mesas, encuestas y
 - PDO
 - JWT Authentication
 - Composer
-- Deploy en Render
+- Deploy en Railway
 - Base de datos en Railway
 - Postman (colección incluida)
 
@@ -30,7 +30,6 @@ El sistema implementa control de acceso basado en roles:
 -  Socios 
 
 Cada rol tiene permisos específicos y acceso a funcionalidades determinadas.
-
 
 
 ## Funcionalidades Principales
@@ -49,8 +48,8 @@ Cada rol tiene permisos específicos y acceso a funcionalidades determinadas.
   - Entregado
 - Estados de mesa:
   - Esperando pedido
-  - Comiendo
-  - Pagando
+  - Con cliente comiendo
+  - Con cliente pagando
   - Cerrada
 
 ### Gestión por Sector
@@ -67,7 +66,6 @@ Cada sector del restaurante visualiza únicamente los productos que le correspon
 - Productos demorados
 - Mesa más utilizada
 - Mejores comentarios de clientes
-- Descarga de PDF con reportes
 
 ### Encuestas
 El cliente puede calificar:
@@ -98,12 +96,22 @@ Base de datos PostgreSQL alojada en Railway.
 
 ## Pruebas con Postman
 
-El repositorio incluye una archivo llamado  `La_Comanda.postman_collection.json` con la colección completa de endpoints.
+En la raíz del repositorio se incluyen:
 
-Pasos:
-1. Importar la colección en Postman
-2. Realizar login para obtener tokens
-3. Ejecutar las requests
+- Archivo llamado  `La_Comanda.postman_collection.json` con la colección completa de endpoints.
+- Archivo de requerimientos del proyecto.
+- Archivo de los criterios de evaluación del proyecto.
+
+Puede importar la coleccion en postman y seguir los pasos que estan en el archivo "API - La comanda Criterios de Correccion"
+
+Tambien hay endpoints para la creacion de Las Clases 'Usuario', 'Mesa' y 'Producto'
+
+### Cómo probar la API:
+
+1. Descargar el archivo de colección `.json`.
+2. Importarlo en Postman.
+3. Ejecutar la request de login para obtener el token JWT.
+4. Utilizar el token en las requests protegidas.
 
 
 ## Base de Datos
@@ -111,7 +119,6 @@ Pasos:
 Base de datos relacional en PostgreSQL con:
 
 - Relaciones entre entidades
-- Claves foráneas
 - Integridad referencial
 - Manejo de estados
 
